@@ -1,4 +1,4 @@
-import { Role } from '../types';
+import { Role, User } from '../types';
 
 const BASE_URL = 'http://localhost:3002';
 
