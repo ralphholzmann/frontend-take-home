@@ -4,14 +4,17 @@ const formatDate = (date: string) => {
     month: 'short',
     day: 'numeric',
   });
-}
+};
 
 const formatNumber = (number: number) => {
   return number.toLocaleString('en-US');
-}
+};
 
-
-const setQueryParam = (key: string, value?: string | null, mode: 'push'|'replace' = 'replace') => {
+const setQueryParam = (
+  key: string,
+  value?: string | null,
+  mode: 'push' | 'replace' = 'replace',
+) => {
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
   const current = typeof window !== 'undefined' ? window.location.search : '';
   const params = new URLSearchParams(current);
@@ -25,6 +28,6 @@ const setQueryParam = (key: string, value?: string | null, mode: 'push'|'replace
   const url = `${pathname}${params.toString() ? `?${params}` : ''}`;
   const method = mode === 'push' ? 'pushState' : 'replaceState';
   window.history[method](null, '', url);
-}
+};
 
 export { formatDate, formatNumber, setQueryParam };

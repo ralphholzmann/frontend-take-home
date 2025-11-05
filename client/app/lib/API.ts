@@ -1,4 +1,4 @@
-import { Role } from "../types";
+import { Role } from '../types';
 
 const fetchUsers = async (page: number, search?: string) => {
   const url = new URL('http://localhost:3002/users');
@@ -8,17 +8,17 @@ const fetchUsers = async (page: number, search?: string) => {
   }
   const response = await fetch(url.toString());
   return response.json();
-}
+};
 
 const fetchRoles = async (page: number = 1, search?: string) => {
   const url = new URL('http://localhost:3002/roles');
   url.searchParams.set('page', page.toString());
-  if (search) { 
+  if (search) {
     url.searchParams.set('search', search);
   }
   const response = await fetch(url.toString());
   return response.json();
-}
+};
 
 const getRolesMap = async (memo: Role[] = [], page: number = 1) => {
   const response = await fetchRoles(page);
@@ -30,7 +30,7 @@ const getRolesMap = async (memo: Role[] = [], page: number = 1) => {
   }
 
   return new Map(memo.map((role: Role) => [role.id, role.name]));
-}
+};
 
 const getAllUsers = async (memo: User[] = [], page: number = 1) => {
   const response = await fetchUsers(page);
@@ -39,7 +39,7 @@ const getAllUsers = async (memo: User[] = [], page: number = 1) => {
     return getAllUsers(memo, response.next);
   }
   return memo;
-}
+};
 
 const patchRole = async (role: Pick<Role, 'id' | 'name' | 'description' | 'isDefault'>) => {
   const response = await fetch(`http://localhost:3002/roles/${role.id}`, {
@@ -50,13 +50,13 @@ const patchRole = async (role: Pick<Role, 'id' | 'name' | 'description' | 'isDef
     body: JSON.stringify(role),
   });
   return response.json();
-}
+};
 
 const deleteUser = async (userId: string) => {
   const response = await fetch(`http://localhost:3002/users/${userId}`, {
     method: 'DELETE',
   });
   return response.json();
-}
+};
 
-export { fetchUsers, fetchRoles, getRolesMap, deleteUser, getAllUsers, patchRole};
+export { fetchUsers, fetchRoles, getRolesMap, deleteUser, getAllUsers, patchRole };

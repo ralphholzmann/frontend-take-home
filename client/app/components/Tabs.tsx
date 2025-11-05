@@ -1,22 +1,22 @@
-"use client";
-import { createContext, useContext, useRef, useState, Children, useLayoutEffect} from "react";
-import cx from "classnames";
+'use client';
+import { createContext, useContext, useRef, useState, Children, useLayoutEffect } from 'react';
+import cx from 'classnames';
 
 type TabContextType = {
   activeTab: string | null;
   setActiveTab: (value: string) => void;
-}
+};
 
 const TabContext = createContext<TabContextType>({
   activeTab: null,
   setActiveTab: () => {},
-}); 
+});
 
 export type Tab = {
   label: string;
   value: string;
   Component: React.ComponentType;
-}
+};
 
 interface TabsProps {
   tabs: Tab[];
@@ -32,7 +32,7 @@ export const Tabs = ({ tabs, children, activeTab: initialActiveTab, onTabChange 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
     onTabChange?.(value);
-  }
+  };
 
   return (
     <TabContext.Provider value={{ activeTab, setActiveTab: handleTabChange }}>
@@ -52,11 +52,17 @@ export const TabTrigger = ({ label, value, className }: TabTriggerProps) => {
   const isActive = activeTab === value;
 
   return (
-    <button onClick={() => setActiveTab(value)} className={cx("relative text-sm px-4 py-2.5 cursor-pointer",
-      {
-      "text-muted before:bg-transparent": !isActive,
-      "text-foreground font-medium before:bg-purple-9": isActive,
-    }, className)}>
+    <button
+      onClick={() => setActiveTab(value)}
+      className={cx(
+        'relative cursor-pointer px-4 py-2.5 text-sm',
+        {
+          'text-muted before:bg-transparent': !isActive,
+          'text-foreground before:bg-purple-9 font-medium': isActive,
+        },
+        className,
+      )}
+    >
       {label}
     </button>
   );
@@ -72,11 +78,7 @@ export const TabContent = ({ value, children, className }: TabContentProps) => {
   const { activeTab } = useContext(TabContext);
   if (activeTab !== value) return null;
 
-  return (
-    <div className={cx("", className)}>
-      {children}
-    </div>
-  );
+  return <div className={cx('', className)}>{children}</div>;
 };
 
 interface TabListProps {
@@ -95,7 +97,6 @@ export const TabList = ({ children, className }: TabListProps) => {
     }
   };
 
-
   useLayoutEffect(() => {
     if (activeTab && tabTriggerRefs.current?.[activeTab]) {
       const node = tabTriggerRefs.current?.[activeTab];
@@ -107,14 +108,21 @@ export const TabList = ({ children, className }: TabListProps) => {
   }, [activeTab]);
 
   return (
-    <div className={cx("flex relative before:content-[''] before:absolute before:bottom-0 before:left-0 before:w-full before:h-px before:bg-neutral-alpha-6 mb-6", className)}>
+    <div
+      className={cx(
+        "before:bg-neutral-alpha-6 relative mb-6 flex before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:content-['']",
+        className,
+      )}
+    >
       {Children.map(children, (child: React.ReactElement<TabTriggerProps>) => {
         return (
-          <div ref={(el) => handleRef(child.props.value)(el)} key={child.props.value}>{child}</div>
-        )
+          <div ref={(el) => handleRef(child.props.value)(el)} key={child.props.value}>
+            {child}
+          </div>
+        );
       })}
       <div
-        className="absolute bottom-0 left-0 h-0.5 w-px bg-purple-9 origin-bottom-left transition-transform duration-150"
+        className="bg-purple-9 absolute bottom-0 left-0 h-0.5 w-px origin-bottom-left transition-transform duration-150"
         style={{
           transform: `translateX(${lineLeft}px) scaleX(${lineWidth})`,
         }}

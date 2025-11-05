@@ -1,22 +1,22 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   turbopack: {
     rules: {
-      "*.svg": {
+      '*.svg': {
         loaders: [
           {
-            loader: "@svgr/webpack",
+            loader: '@svgr/webpack',
             options: {
-              icon: true,           // sets viewBox + 1em sizing semantics
+              icon: true, // sets viewBox + 1em sizing semantics
               svgo: true,
               svgoConfig: {
-                plugins: [{ name: "removeDimensions", active: true }],
+                plugins: [{ name: 'removeDimensions', active: true }],
               },
             },
           },
         ],
-        as: "*.js",
+        as: '*.js',
       },
     },
   },

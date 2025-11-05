@@ -1,37 +1,33 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
-  --foreground: #2B333B;
-  --surface: #FFFFFFE5;
-  --purple-9: #6565EC;
-  --purple-8: #5151C6;
-  --muted: #0007139F;
-  --neutral-alpha-6: #01012E22;
-  --gray-alpha-6: #DDDDE3;
-  --gray-alpha-8: #00082F46;
-  --gray-alpha-3: #00003B0D;
-  --gray-alpha-5: #0000301B;
-  --gray-alpha-11: #0007139F;
-  --red-alpha-11: #C10030DB;
-  --red-alpha-7: #C9002850;
-  --red-surface: #FFF6F6CC;
-  --red-surface-hover: #FDE4E9;
-  --red-divider: #E43F60;
+  --foreground: #2b333b;
+  --surface: #ffffffe5;
+  --purple-9: #6565ec;
+  --purple-8: #5151c6;
+  --muted: #0007139f;
+  --neutral-alpha-6: #01012e22;
+  --gray-alpha-6: #dddde3;
+  --gray-alpha-8: #00082f46;
+  --gray-alpha-3: #00003b0d;
+  --gray-alpha-5: #0000301b;
+  --gray-alpha-11: #0007139f;
+  --red-alpha-11: #c10030db;
+  --red-alpha-7: #c9002850;
+  --red-surface: #fff6f6cc;
+  --red-surface-hover: #fde4e9;
+  --red-divider: #e43f60;
   --backdrop: #00000066;
-  --grays-3: #2B333B;
-  --grays-2: #F9F9FB;
-  --grays-7: #D3D4DB;
-  --grays-6: #C3C4CB;
+  --grays-3: #2b333b;
+  --grays-2: #f9f9fb;
+  --grays-7: #d3d4db;
+  --grays-6: #c3c4cb;
 
-  --shadow-1:
-    0px 1.5px 2px rgba(0, 0, 0, 0.024),
-    inset 0px 1.5px 2px rgba(5, 5, 88, 0.024);
+  --shadow-1: 0px 1.5px 2px rgba(0, 0, 0, 0.024), inset 0px 1.5px 2px rgba(5, 5, 88, 0.024);
   --popover-shadow:
-    0px 30px 56px rgba(20, 20, 26, 0.12),
-    0px 3.71px 13.2px rgba(20, 20, 26, 0.04),
-    0px -6.43px 24px rgba(20, 20, 26, 0.0168),
-    0px 4.69103px 6.94968px rgba(20, 20, 26, 0.0532451),
+    0px 30px 56px rgba(20, 20, 26, 0.12), 0px 3.71px 13.2px rgba(20, 20, 26, 0.04),
+    0px -6.43px 24px rgba(20, 20, 26, 0.0168), 0px 4.69103px 6.94968px rgba(20, 20, 26, 0.0532451),
     0px 1.85484px 2.74791px rgba(20, 20, 26, 0.0372022);
 }
 
@@ -61,26 +57,24 @@
   --color-backdrop: var(--backdrop);
   --shadow-1: var(--shadow-1);
   --shadow-popover: var(--popover-shadow);
-
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
 }
 
 .reveal-enter {
   opacity: 0;
   transform-origin: 50% 0;
   animation: reveal-enter 300ms ease-in-out forwards;
-
 }
 
 @keyframes reveal-enter {
   from {
     opacity: 0;
-    transform:  scale(0.98) translateY(10px);
+    transform: scale(0.98) translateY(10px);
   }
 
   to {
@@ -89,18 +83,16 @@ body {
   }
 }
 
-
 .reveal-enter-from-top {
   opacity: 0;
   transform-origin: 50% 0;
   animation: reveal-enter-from-top 150ms ease-in-out forwards;
 }
 
-
 @keyframes reveal-enter-from-top {
   from {
     opacity: 0;
-    transform:  scale(0.97) translateY(-10px);
+    transform: scale(0.97) translateY(-10px);
   }
 
   to {
@@ -110,7 +102,6 @@ body {
 }
 
 .hide-leave-from-top {
-
   opacity: 0;
   transform-origin: 50% 0;
   animation: hide-leave-from-top 150ms ease-in-out forwards;
@@ -119,7 +110,7 @@ body {
 @keyframes hide-leave-from-top {
   from {
     opacity: 1;
-    transform:  scale(1) translateY(0);
+    transform: scale(1) translateY(0);
   }
 
   to {

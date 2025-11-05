@@ -2,13 +2,10 @@ import type { InputHTMLAttributes } from 'react';
 import { useState, useCallback, useMemo } from 'react';
 
 const useInput = <T extends HTMLInputElement | HTMLTextAreaElement>(
-  defaultValue = ''
+  defaultValue = '',
 ): [
   string,
-  Pick<
-    InputHTMLAttributes<T>,
-    'onChange'
-  >,
+  Pick<InputHTMLAttributes<T>, 'onChange'>,
   React.Dispatch<React.SetStateAction<string>>,
 ] => {
   const [value, setValue] = useState<string>(defaultValue || '');
@@ -17,7 +14,7 @@ const useInput = <T extends HTMLInputElement | HTMLTextAreaElement>(
     (event: React.ChangeEvent<T>) => {
       setValue(event.target.value);
     },
-    [setValue]
+    [setValue],
   );
 
   const inputProps = useMemo(
@@ -25,7 +22,7 @@ const useInput = <T extends HTMLInputElement | HTMLTextAreaElement>(
       onChange,
       value,
     }),
-    [onChange, value]
+    [onChange, value],
   );
 
   return [value, inputProps, setValue];

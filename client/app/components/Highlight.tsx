@@ -5,10 +5,7 @@ type HighlightProps = {
   children?: string;
 };
 
-const Highlight = ({
-  highlight,
-  children,
-}: HighlightProps) => {
+const Highlight = ({ highlight, children }: HighlightProps) => {
   const parts = useMemo(() => {
     if (!children) {
       return [null];
@@ -22,9 +19,7 @@ const Highlight = ({
     if (index > -1) {
       return [
         children.slice(0, index),
-        <mark key="highlight">
-          {children.slice(index, index + highlight.length)}
-        </mark>,
+        <mark key="highlight">{children.slice(index, index + highlight.length)}</mark>,
         children.slice(index + highlight.length),
       ];
     }

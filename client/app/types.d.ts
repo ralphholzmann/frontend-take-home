@@ -23,4 +23,3 @@ export interface PagedData<T> {
   prev: number | null;
   pages: number;
 }
-
