@@ -36,17 +36,6 @@ const UsersTable = () => {
   const search = searchParams.get('search') ?? '';
   const client = useQueryClient();
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
-  const deleteUserMutation = useMutation({
-    mutationFn: (userId: string) => {
-      return deleteUser(userId);
-    },
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['users'] });
-    },
-    onError: () => {
-      // toast.error('Failed to delete user');
-    },
-  });
 
   const { data: usersResponse } = useSuspenseQuery<PagedData<User>>({
     queryKey: ['users', page, search],
@@ -65,11 +54,6 @@ const UsersTable = () => {
         queryFn: () => fetchUsers(usersResponse.next!, search),
       });
     }
-  };
-
-  const onDeleteUser = () => {
-    deleteUserMutation.mutate(userToDelete!.id);
-    setUserToDelete(null);
   };
 
   const onPrevPrefetch = () => {
@@ -105,7 +89,7 @@ const UsersTable = () => {
         {usersResponse.data.map((user: User) => (
           <Row key={user.id}>
             <Cell>
-              <Avatar src={user.photo} alt={`${user.first} ${user.last}`} />
+              <Avatar src={user.photo} firstName={user.first} lastName={user.last} />
               <span className="ml-2">
                 <Highlight highlight={search}>{user.first}</Highlight>{' '}
                 <Highlight highlight={search}>{user.last}</Highlight>
@@ -150,11 +134,7 @@ const UsersTable = () => {
         </Row>
       </Table>
       {userToDelete && (
-        <DeleteUserModal
-          user={userToDelete}
-          onRequestClose={() => setUserToDelete(null)}
-          onDeleteUser={onDeleteUser}
-        />
+        <DeleteUserModal user={userToDelete} onRequestClose={() => setUserToDelete(null)} />
       )}
     </>
   );

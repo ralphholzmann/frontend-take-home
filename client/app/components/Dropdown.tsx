@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { createContext, useContext, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type DropdownContextType = {
@@ -70,15 +70,25 @@ type DropdownContentProps = {
 
 const DropdownContent = ({ children, ...props }: DropdownContentProps) => {
   const { coordinates, setCoordinates, setClosing, closing } = useContext(DropdownContext);
-
+  const ref = useRef<HTMLDivElement>(null);
   const requestClose = () => {
     setClosing(true);
+  };
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') {
+      requestClose();
+    }
   };
 
   if (!coordinates) return null;
 
   return createPortal(
-    <div className={cx('fixed inset-0 z-10')} onClick={requestClose}>
+    <div
+      ref={ref}
+      className={cx('fixed inset-0 z-10')}
+      onClick={requestClose}
+      onKeyDown={onKeyDown}
+    >
       <div
         className={cx(
           'shadow-popover reveal-enter-from-top absolute top-0 left-0 z-20 flex min-w-36 -translate-x-full flex-col gap-px rounded-lg bg-white p-1',
@@ -92,7 +102,11 @@ const DropdownContent = ({ children, ...props }: DropdownContentProps) => {
             setCoordinates(null);
             setClosing(false);
           }
+          if (event.animationName === 'reveal-enter-from-top') {
+            ref.current?.querySelector('button')?.focus();
+          }
         }}
+        {...props}
       >
         {children}
       </div>

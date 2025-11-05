@@ -18,6 +18,8 @@
   --red-surface: #fff6f6cc;
   --red-surface-hover: #fde4e9;
   --red-divider: #e43f60;
+  --green-surface: #f6fff6cc;
+  --green-divider: #3f603f;
   --backdrop: #00000066;
   --grays-3: #2b333b;
   --grays-2: #f9f9fb;
@@ -36,7 +38,6 @@
   --color-foreground: var(--foreground);
   --color-purple-9: var(--purple-9);
   --color-purple-8: var(--purple-8);
-
   --color-muted: var(--muted);
   --color-gray-alpha-11: var(--gray-alpha-11);
   --color-gray-alpha-8: var(--gray-alpha-8);
@@ -46,6 +47,8 @@
   --color-grays-2: var(--grays-2);
   --color-grays-7: var(--grays-7);
   --color-grays-6: var(--grays-6);
+  --color-green-surface: var(--green-surface);
+  --color-green-divider: var(--green-divider);
   --color-red-alpha-11: var(--red-alpha-11);
   --color-red-alpha-7: var(--red-alpha-7);
   --color-red-surface: var(--red-surface);
@@ -116,5 +119,33 @@ body {
   to {
     opacity: 0;
     transform: scale(0.97) translateY(-10px);
+  }
+}
+
+.fade-enter {
+  opacity: 0;
+  animation: fade-enter 150ms ease-in-out forwards;
+}
+.fade-leave {
+  opacity: 0;
+  animation: fade-leave 150ms ease-in-out forwards;
+}
+
+@keyframes fade-enter {
+  from {
+    opacity: 0;
+    z-index: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-leave {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }

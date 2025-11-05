@@ -7,7 +7,7 @@ import {
 } from '@/app/components/Dropdown';
 import Highlight from '@/app/components/Highlight';
 import Icon from '@/app/components/Icon';
-import { SkeletonText } from '@/app/components/Skeleton';
+import { SkeletonAvatar, SkeletonText } from '@/app/components/Skeleton';
 import Table, { Cell, Row } from '@/app/components/Table';
 import { fetchRoles, fetchUsers, getRolesMap, patchRole } from '@/app/lib/API';
 import { formatDate, setQueryParam } from '@/app/lib/utils';
@@ -38,32 +38,10 @@ const RolesTable = () => {
   const search = searchParams.get('search') ?? '';
   const client = useQueryClient();
   const [roleToEdit, setRoleToEdit] = useState<Role | null>(null);
-  const patchRoleMutation = useMutation({
-    mutationFn: (role: Pick<Role, 'id' | 'name' | 'description' | 'isDefault'>) => {
-      return patchRole(role);
-    },
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['roles'] });
-    },
-    onError: () => {
-      // toast.error('Failed to edit role');
-    },
-  });
-
-  const onEditRole = (role: Pick<Role, 'id' | 'name' | 'description' | 'isDefault'>) => {
-    console.log('editing role', role);
-    patchRoleMutation.mutate(role);
-    setRoleToEdit(null);
-  };
 
   const { data: rolesResponse } = useSuspenseQuery<PagedData<Role>>({
     queryKey: ['roles', page, search],
     queryFn: () => fetchRoles(page, search),
-  });
-
-  const { data: rolesMap } = useSuspenseQuery<Map<string, string>>({
-    queryKey: ['roles'],
-    queryFn: () => getRolesMap(),
   });
 
   const onNextPrefetch = () => {
@@ -102,7 +80,7 @@ const RolesTable = () => {
         <RolesTableHeader />
         {rolesResponse.data.length === 0 && (
           <Row>
-            <Cell className="text-muted col-span-4 justify-center">No users found</Cell>
+            <Cell className="text-muted col-span-5 justify-center">No roles found</Cell>
           </Row>
         )}
         {rolesResponse.data.map((role: Role) => (
@@ -160,13 +138,7 @@ const RolesTable = () => {
           </Cell>
         </Row>
       </Table>
-      {roleToEdit && (
-        <EditRoleModal
-          role={roleToEdit}
-          onRequestClose={() => setRoleToEdit(null)}
-          onEditRole={onEditRole}
-        />
-      )}
+      {roleToEdit && <EditRoleModal role={roleToEdit} onRequestClose={() => setRoleToEdit(null)} />}
     </>
   );
 };
@@ -177,7 +149,8 @@ const RolesTableSkeletonRow = () => {
       <Cell>
         <SkeletonText />
       </Cell>
-      <Cell>
+      <Cell className="flex flex-col gap-1">
+        <SkeletonText />
         <SkeletonText />
       </Cell>
       <Cell>
@@ -187,9 +160,7 @@ const RolesTableSkeletonRow = () => {
         <SkeletonText />
       </Cell>
       <Cell className="text-gray-alpha-11">
-        <div className="flex size-6 items-center justify-center">
-          <Icon name="dots-horizontal" size={16} />
-        </div>
+        <SkeletonAvatar />
       </Cell>
     </Row>
   );
@@ -197,7 +168,7 @@ const RolesTableSkeletonRow = () => {
 
 export const RolesTableSkeleton = () => {
   return (
-    <Table className="grid-cols-[1fr_auto_1fr_1fr_auto]">
+    <Table className="grid-cols-[2fr_3fr_1fr_1fr_auto]">
       <RolesTableHeader />
       {Array.from({ length: 10 }).map((_, index) => (
         <RolesTableSkeletonRow key={index} />

@@ -17,7 +17,7 @@ const baseClasses = 'flex gap-2 items-center border';
 const variants: Record<ButtonVariant, { default: string; disabled: string }> = {
   primary: {
     default: 'bg-purple-9 border-0 text-white cursor-pointer hover:bg-purple-8 active:bg-purple-9',
-    disabled: 'cursor-not-allowed',
+    disabled: 'bg-purple-9 border-0 text-white cursor-not-allowed opacity-50',
   },
   secondary: {
     default:

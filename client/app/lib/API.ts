@@ -1,23 +1,42 @@
 import { Role } from '../types';
 
-const fetchUsers = async (page: number, search?: string) => {
-  const url = new URL('http://localhost:3002/users');
-  url.searchParams.set('page', page.toString());
-  if (search) {
-    url.searchParams.set('search', search);
+const BASE_URL = 'http://localhost:3002';
+
+type ExpectedErrorBody = {
+  message: string;
+};
+
+const makeRequest = async (url: string, options: RequestInit = {}) => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    let errorBody;
+    try {
+      errorBody = (await response.json()) as ExpectedErrorBody;
+    } catch {
+      throw new Error('Failed to make request. Please try again.');
+    }
+    throw new Error(errorBody.message);
   }
-  const response = await fetch(url.toString());
+
   return response.json();
 };
 
-const fetchRoles = async (page: number = 1, search?: string) => {
-  const url = new URL('http://localhost:3002/roles');
+const fetchUsers = async (page: number, search?: string) => {
+  const url = new URL(`${BASE_URL}/users`);
   url.searchParams.set('page', page.toString());
   if (search) {
     url.searchParams.set('search', search);
   }
-  const response = await fetch(url.toString());
-  return response.json();
+  return makeRequest(url.toString());
+};
+
+const fetchRoles = async (page: number = 1, search?: string) => {
+  const url = new URL(`${BASE_URL}/roles`);
+  url.searchParams.set('page', page.toString());
+  if (search) {
+    url.searchParams.set('search', search);
+  }
+  return makeRequest(url.toString());
 };
 
 const getRolesMap = async (memo: Role[] = [], page: number = 1) => {
@@ -42,21 +61,21 @@ const getAllUsers = async (memo: User[] = [], page: number = 1) => {
 };
 
 const patchRole = async (role: Pick<Role, 'id' | 'name' | 'description' | 'isDefault'>) => {
-  const response = await fetch(`http://localhost:3002/roles/${role.id}`, {
+  const url = new URL(`${BASE_URL}/roles/${role.id}`);
+  return makeRequest(url.toString(), {
     method: 'PATCH',
     headers: {
       'content-type': 'application/json',
     },
     body: JSON.stringify(role),
   });
-  return response.json();
 };
 
 const deleteUser = async (userId: string) => {
-  const response = await fetch(`http://localhost:3002/users/${userId}`, {
+  const url = new URL(`${BASE_URL}/users/${userId}`);
+  return makeRequest(url.toString(), {
     method: 'DELETE',
   });
-  return response.json();
 };
 
 export { fetchUsers, fetchRoles, getRolesMap, deleteUser, getAllUsers, patchRole };

@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Tabs, Tab, TabTrigger, TabContent, TabList } from './components/Tabs';
 import RolesList from './features/RolesList';
 import UsersList from './features/UsersList';
+import { Suspense } from 'react';
 
 const tabs: Tab[] = [
   {
@@ -17,7 +18,7 @@ const tabs: Tab[] = [
   },
 ];
 
-export default function Home() {
+export default function AccountManagement() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') ?? 'users';

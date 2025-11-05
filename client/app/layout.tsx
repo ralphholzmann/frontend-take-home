@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { ReactQueryProvider } from './lib/ReactQueryProvider';
+import Toast, { ToastProvider } from './components/Toast';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,7 +17,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ToastProvider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <ReactQueryProvider>
+              {children}
+              <Toast />
+            </ReactQueryProvider>
+          </Suspense>
+        </ToastProvider>
       </body>
     </html>
   );
