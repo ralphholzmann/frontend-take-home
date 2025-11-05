@@ -1,7 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Tabs, Tab, TabTrigger, TabContent, TabList } from "./components/Tabs";
-import Roles from "./features/roles";
+import RolesList from "./features/RolesList";
 import UsersList from "./features/UsersList";
 
 const tabs: Tab[] = [
@@ -13,7 +13,7 @@ const tabs: Tab[] = [
 {
   label: "Roles",
   value: "roles",
-  Component: Roles,
+  Component: RolesList,
 }
 ]
 
@@ -25,11 +25,14 @@ export default function Home() {
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("tab", value);
+    params.delete("page");
+    params.delete("search");
     router.push(`/?${params.toString()}`);
   }
 
+
   return (
-    <main className="max-w-[850px] mx-auto mt-10">
+    <main className="max-w-[850px] mx-auto my-10">
       <Tabs tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange}>
         <TabList>
           {tabs.map((tab) => (
@@ -37,7 +40,7 @@ export default function Home() {
           ))}
         </TabList>
         {tabs.map(({value, Component}) => (
-          <TabContent key={value} value={value}>
+          <TabContent key={value} value={value} className="reveal-enter">
             <Component />
           </TabContent>
         ))}

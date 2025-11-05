@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-query": "^5.90.6",
     "classnames": "^2.5.1",
     "next": "16.0.1",
     "react": "19.2.0",
