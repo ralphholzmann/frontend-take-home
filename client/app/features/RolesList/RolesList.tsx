@@ -19,12 +19,15 @@ const RolesList = () => {
     <section className="space-y-6">
       <div className="flex gap-2">
         <FilterInput
+          aria-label="Filter roles"
           placeholder="Search by role name…"
           handleSearchChange={handleSearchChange}
           defaultValue={search}
           autoFocus
         />
-        <Button iconStart="plus">Add Role</Button>
+        <Button iconStart="plus" aria-label="Add role">
+          Add Role
+        </Button>
       </div>
       <Suspense fallback={<RolesTableSkeleton />}>
         <RolesTable />

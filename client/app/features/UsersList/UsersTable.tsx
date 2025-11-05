@@ -99,7 +99,7 @@ const UsersTable = () => {
             <Cell>{formatDate(user.createdAt)}</Cell>
             <Cell className="text-gray-alpha-11">
               <Dropdown>
-                <DropdownTrigger>
+                <DropdownTrigger aria-label="Open more actions menu">
                   <Icon name="dots-horizontal" size={16} />
                 </DropdownTrigger>
                 <DropdownContent>

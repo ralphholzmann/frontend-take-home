@@ -2,6 +2,7 @@ import cx from 'classnames';
 import Icon, { IconName } from './Icon';
 
 type BaseInputProps = {
+  ariaLabel?: string;
   className?: string;
   label?: React.ReactNode;
   name: string;
@@ -20,7 +21,15 @@ type TextareaBaseProps = BaseInputProps & {
 
 type InputProps = TextareaBaseProps | InputBaseProps;
 
-const Input = ({ className, startIcon, type = 'text', label, textarea, ...props }: InputProps) => {
+const Input = ({
+  className,
+  startIcon,
+  type = 'text',
+  label,
+  textarea,
+  ariaLabel,
+  ...props
+}: InputProps) => {
   const input = textarea ? (
     <textarea
       className={cx(
@@ -30,6 +39,7 @@ const Input = ({ className, startIcon, type = 'text', label, textarea, ...props 
     />
   ) : (
     <label
+      aria-label={ariaLabel}
       className={cx(
         'bg-surface border-gray-alpha-5 focus-within:border-purple-9 shadow-1 flex h-8 items-center rounded border px-1',
         className,
@@ -51,7 +61,7 @@ const Input = ({ className, startIcon, type = 'text', label, textarea, ...props 
 
   if (label) {
     return (
-      <label className="flex flex-col gap-1">
+      <label aria-label={ariaLabel} className="flex flex-col gap-1">
         <span className="text-gray-alpha-11 text-sm leading-5.5 font-medium tracking-tight">
           {label}
         </span>

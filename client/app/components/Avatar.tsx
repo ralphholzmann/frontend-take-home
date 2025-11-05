@@ -18,7 +18,7 @@ const sizes: Record<AvatarSize, string> = {
 const Avatar = ({ src, firstName, lastName, size = 'md' }: AvatarProps) => {
   const sizeClass = sizes[size];
   const [loaded, setLoaded] = useState(false);
-  const alt = `${firstName} ${lastName}`;
+  const alt = `Avatar image for${firstName} ${lastName}`;
 
   useEffect(() => {
     if (!src) {

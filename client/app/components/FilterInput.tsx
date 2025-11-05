@@ -42,6 +42,8 @@ const FilterInput = ({
   return (
     <form className="grow" onSubmit={handleSearchSubmit}>
       <Input
+        aria-label="Filter users"
+        name="search"
         placeholder={placeholder}
         startIcon="magnifying-glass"
         className="grow"

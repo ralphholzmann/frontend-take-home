@@ -33,7 +33,7 @@ const Dropdown = ({ children }: DropdownProps) => {
 type DropdownTriggerProps = {
   children: React.ReactNode;
   className?: string;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const DropdownTrigger = ({ children, ...props }: DropdownTriggerProps) => {
   const ref = useRef<HTMLButtonElement>(null);

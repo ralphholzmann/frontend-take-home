@@ -50,9 +50,16 @@ interface TabTriggerProps {
 export const TabTrigger = ({ label, value, className }: TabTriggerProps) => {
   const { activeTab, setActiveTab } = useContext(TabContext);
   const isActive = activeTab === value;
+  const tabId = `tab-${value}`;
+  const panelId = `tabpanel-${value}`;
 
   return (
     <button
+      id={tabId}
+      role="tab"
+      aria-selected={isActive}
+      aria-label={`Switch to ${label} tab`}
+      aria-controls={panelId}
       onClick={() => setActiveTab(value)}
       className={cx(
         'relative cursor-pointer px-4 py-2.5 text-sm',
@@ -76,9 +83,17 @@ interface TabContentProps {
 
 export const TabContent = ({ value, children, className }: TabContentProps) => {
   const { activeTab } = useContext(TabContext);
-  if (activeTab !== value) return null;
+  const isActive = activeTab === value;
+  const tabId = `tab-${value}`;
+  const panelId = `tabpanel-${value}`;
 
-  return <div className={cx('', className)}>{children}</div>;
+  if (!isActive) return null;
+
+  return (
+    <div id={panelId} role="tabpanel" aria-labelledby={tabId} className={cx('', className)}>
+      {children}
+    </div>
+  );
 };
 
 interface TabListProps {
@@ -109,6 +124,7 @@ export const TabList = ({ children, className }: TabListProps) => {
 
   return (
     <div
+      role="tablist"
       className={cx(
         "before:bg-neutral-alpha-6 relative mb-6 flex before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:content-['']",
         className,
