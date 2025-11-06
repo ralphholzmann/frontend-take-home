@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <ToastProvider>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div />}>
             <ReactQueryProvider>
               {children}
               <Toast />
