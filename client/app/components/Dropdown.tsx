@@ -23,6 +23,11 @@ const Dropdown = ({ children }: DropdownProps) => {
   const [coordinates, setCoordinates] = useState<{ x: number; y: number } | null>(null);
   const [closing, setClosing] = useState(false);
 
+  useEffect(() => {
+    // Prevent body scroll when dropdown is open
+    document.body.classList.toggle('overflow-hidden', !!coordinates);
+  }, [coordinates]);
+
   return (
     <DropdownContext.Provider value={{ coordinates, setCoordinates, closing, setClosing }}>
       <div className="relative flex">{children}</div>

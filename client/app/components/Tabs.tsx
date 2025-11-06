@@ -22,15 +22,12 @@ interface TabsProps {
   tabs: Tab[];
   children: React.ReactNode;
   className?: string;
-  activeTab?: string;
+  activeTab: string;
   onTabChange?: (value: string) => void;
 }
 
-export const Tabs = ({ tabs, children, activeTab: initialActiveTab, onTabChange }: TabsProps) => {
-  const [activeTab, setActiveTab] = useState<string>(initialActiveTab ?? tabs[0].value);
-
+export const Tabs = ({ tabs, children, activeTab, onTabChange }: TabsProps) => {
   const handleTabChange = (value: string) => {
-    setActiveTab(value);
     onTabChange?.(value);
   };
 

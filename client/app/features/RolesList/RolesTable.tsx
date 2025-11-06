@@ -9,15 +9,14 @@ import Highlight from '@/app/components/Highlight';
 import Icon from '@/app/components/Icon';
 import { SkeletonAvatar, SkeletonText } from '@/app/components/Skeleton';
 import Table, { Cell, Row } from '@/app/components/Table';
-import { fetchRoles, fetchUsers, getRolesMap, patchRole } from '@/app/lib/API';
+import { fetchRoles, fetchUsers } from '@/app/lib/API';
 import { formatDate, setQueryParam } from '@/app/lib/utils';
 import { PagedData, Role } from '@/app/types';
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import RoleUserCount from './RoleUserCount';
 import EditRoleModal from './EditRoleModal';
-// import { DeleteUserModal } from "./DeleteUserModal";
 
 const RolesTableHeader = () => {
   return (

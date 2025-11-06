@@ -3,7 +3,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Tabs, Tab, TabTrigger, TabContent, TabList } from './components/Tabs';
 import RolesList from './features/RolesList';
 import UsersList from './features/UsersList';
-import { Suspense } from 'react';
 
 const tabs: Tab[] = [
   {
@@ -24,10 +23,8 @@ export default function AccountManagement() {
   const activeTab = searchParams.get('tab') ?? 'users';
 
   const handleTabChange = (value: string) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
     params.set('tab', value);
-    params.delete('page');
-    params.delete('search');
     router.push(`/?${params.toString()}`);
   };
 
@@ -41,7 +38,7 @@ export default function AccountManagement() {
         </TabList>
         {tabs.map(({ value, Component }) => (
           <TabContent key={value} value={value} className="reveal-enter">
-            <Component />
+            <Component key={value} />
           </TabContent>
         ))}
       </Tabs>
